@@ -15,6 +15,28 @@ const Chat = () => {
   const messagesEndRef = useRef(null);
   const navigate = useNavigate();
 
+
+  useEffect(()=>{
+
+    try {
+      const fetchMessages=async()=>{
+      const res=await axios.get(`http://localhost:3000/api/message/get/${selectedUser._id}`,{
+        headers:{ Authorization: `Bearer ${localStorage.getItem('token')}` }
+      })
+      console.log("res messages",res.data);
+      setMessages(res.data.messages);
+    }
+    if(selectedUser){
+      fetchMessages();
+    }
+      
+    } catch (error) {
+      console.error("Error fetching messages:", error);
+      toast.error("Failed to fetch messages");
+    }
+  }, [selectedUser])
+  console.log("messages",messages);
+
   // Auto-scroll to bottom when messages change
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -22,7 +44,7 @@ const Chat = () => {
 
   //  console.log('Auth Token:', token);
 
-console.log('Messages:', messages);
+
   useEffect(() => {
     // Check if user is logged in
     const user = localStorage.getItem("user");
