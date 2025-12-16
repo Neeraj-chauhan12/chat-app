@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { useSocketContext } from "../../context/SocketContext";
 
 const Chat = () => {
   const [messages, setMessages] = useState([]);
@@ -14,6 +15,10 @@ const Chat = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const messagesEndRef = useRef(null);
   const navigate = useNavigate();
+
+  const user=localStorage.getItem('user')
+  const {socket,onlineUsers}=useSocketContext();
+  const isOnline=onlineUsers.includes(user?JSON.parse(user)._id:null);
 
 
   useEffect(()=>{
@@ -229,7 +234,7 @@ const Chat = () => {
                 }`}
               >
                 <div className="flex items-center space-x-2 sm:space-x-3">
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-blue-400 to-purple-500 rounded-full flex items-center justify-center flex-shrink-0">
+                  <div className={`w-10 ${isOnline ? "ring-2 ring-green-500" : ""} h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-blue-400 to-purple-500 rounded-full flex items-center justify-center flex-shrink-0`}>
                     <span className="text-white font-bold text-sm sm:text-base">
                       {user.username?.charAt(0).toUpperCase()}
                     </span>
@@ -242,9 +247,10 @@ const Chat = () => {
                       {user.email}
                     </p>
                   </div>
-                  {user.online && (
+                  {/* user.online */}
+                  {/* {isOnline && (
                     <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 bg-green-500 rounded-full flex-shrink-0"></div>
-                  )}
+                  )} */}
                 </div>
               </button>
             ))

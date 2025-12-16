@@ -1,5 +1,4 @@
-const express=require('express')
-const app=express();
+const express=require('express');
 const cookieParser=require('cookie-parser');
 const dotenv=require('dotenv');
 const { connectDB } = require('./src/dbConnection/Connection');
@@ -7,6 +6,7 @@ dotenv.config();
 const cors=require('cors');
 const userRouter=require('./src/routes/userRouter');
 const messageRouter=require('./src/routes/messageRoute');
+const { app, server } = require('./SocketIo/server');
 
 app.use(express.json());
 app.use(cookieParser());
@@ -23,6 +23,6 @@ app.use('/api/message',messageRouter);
 
 const PORT=process.env.PORT||5000;
 connectDB();
-app.listen(PORT,()=>{
+server.listen(PORT,()=>{
     console.log(`Server is running on port ${PORT}`);
 })
