@@ -31,6 +31,7 @@ exports.sendMessage = async (req, res) => {
       .status(201)
       .json({
         message: "Message send succeessfully",
+        messageData: newMessage,
         conversationId: conversation._id,
       });
   } catch (error) {
