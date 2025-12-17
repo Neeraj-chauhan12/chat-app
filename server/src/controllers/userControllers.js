@@ -1,9 +1,8 @@
-const User=require("../models/userModel")
-const bcrypt=require('bcrypt');
-const jwt=require('jsonwebtoken');
+import User from "../models/userModel.js";
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 
-
-exports.registerUser=async(req,res)=>{
+export const registerUser=async(req,res)=>{
     try {
         const {username,email,password}=req.body;
         const existUser=await User.findOne({email});
@@ -22,7 +21,7 @@ exports.registerUser=async(req,res)=>{
     }
 }
 
-exports.loginUser=async(req,res)=>{
+export const loginUser=async(req,res)=>{
     try {
         const {email,password}=req.body;
 
@@ -48,7 +47,7 @@ exports.loginUser=async(req,res)=>{
     }
 }
 
-exports.logoutUser=async(req,res)=>{
+export const logoutUser=async(req,res)=>{
     try {
         
         res.clearCookie('token');
@@ -61,7 +60,7 @@ exports.logoutUser=async(req,res)=>{
     }
 }
 
-exports.getUserProfile=async(req,res)=>{
+export const getUserProfile=async(req,res)=>{
     try {
 
         const userId=req.userId;
@@ -79,7 +78,7 @@ exports.getUserProfile=async(req,res)=>{
     }
 }
 
-exports.getAllUsers=async(req,res)=>{
+export const getAllUsers=async(req,res)=>{
     const userId=req.userId;
     try {
         const users=await User.find({_id:{$ne:userId}}).select('-password');

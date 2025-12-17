@@ -1,28 +1,45 @@
-const express=require('express');
-const cookieParser=require('cookie-parser');
-const dotenv=require('dotenv');
-const { connectDB } = require('./src/dbConnection/Connection');
+import express from "express";
+import cookieParser from "cookie-parser";
+import dotenv from "dotenv";
+import { connectDB } from "./src/dbConnection/Connection.js";
+import cors from "cors";
+import userRouter from "./src/routes/userRouter.js";
+import messageRouter from "./src/routes/messageRoute.js";
+import { app, server } from "./SocketIo/server.js";
+import path from "path";
+
 dotenv.config();
-const cors=require('cors');
-const userRouter=require('./src/routes/userRouter');
-const messageRouter=require('./src/routes/messageRoute');
-const { app, server } = require('./SocketIo/server');
+
+
+
 
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors({
-    origin:'http://localhost:5173',
-    methods:['GET','POST','PUT','DELETE'],
-    credentials:true,
-}))
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+  })
+);
 
 
 
-app.use('/api/user',userRouter);
-app.use('/api/message',messageRouter);
 
-const PORT=process.env.PORT||5000;
-connectDB();
-server.listen(PORT,()=>{
-    console.log(`Server is running on port ${PORT}`);
+app.use("/api/user", userRouter);
+app.use("/api/message", messageRouter);
+
+//deployment
+if (process.env.NODE_ENV === "production") {
+    const dirname = path.resolve();
+
+app.use(express.static(path.join(dirname, "/client/dist")))
+app.get((_,res)=>{
+    res.sendFile(path.resolve(dirname, "client", "dist", "index.html"))
 })
+}
+const PORT = process.env.PORT || 5000;
+connectDB();
+server.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});

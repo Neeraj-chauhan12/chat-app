@@ -1,8 +1,8 @@
-const { getReceiverSocketId, io } = require("../../SocketIo/server");
-const conversationModel = require("../models/conversationModel");
-const messageModel = require("../models/messageModel");
+import { getReceiverSocketId, io } from "../../SocketIo/server.js";
+import conversationModel from "../models/conversationModel.js";
+import messageModel from "../models/messageModel.js";
 
-exports.sendMessage = async (req, res) => {
+export const sendMessage = async (req, res) => {
   const senderId = req.userId;
   const { id: receiverId } = req.params;
   const { message } = req.body;
@@ -45,7 +45,7 @@ exports.sendMessage = async (req, res) => {
   }
 };
 
-exports.getMessages = async (req, res) => {
+export const getMessages = async (req, res) => {
   const { id: chatUser } = req.params;
   const senderId = req.userId;
 
