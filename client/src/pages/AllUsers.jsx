@@ -24,7 +24,7 @@ const AllUsers = () => {
     try {
       setLoading(true);
       const token =localStorage.getItem('token');
-      const response = await axios.get('http://localhost:3000/api/user/allUsers', {
+      const response = await axios.get('https://chat-app-0zpk.onrender.com/api/user/allUsers', {
         headers: { Authorization: `Bearer ${token}` },
       });
       setUsers(response.data.users );

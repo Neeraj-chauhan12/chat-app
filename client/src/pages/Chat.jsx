@@ -49,7 +49,7 @@ const Chat = () => {
 
     try {
       const fetchMessages=async()=>{
-      const res=await axios.get(`http://localhost:3000/api/message/get/${selectedUser._id}`,{
+      const res=await axios.get(`https://chat-app-0zpk.onrender.com/api/message/get/${selectedUser._id}`,{
         headers:{ Authorization: `Bearer ${localStorage.getItem('token')}` }
       })
       console.log("res messages",res.data);
@@ -106,7 +106,7 @@ const Chat = () => {
       const token = localStorage.getItem("token")
 
       const response = await axios.get(
-        "http://localhost:3000/api/user/allUsers",
+        "https://chat-app-0zpk.onrender.com/api/user/allUsers",
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -125,7 +125,7 @@ const Chat = () => {
       try {
         const token = localStorage.getItem('token');
         const response = await axios.post(
-          `http://localhost:3000/api/message/send/${selectedUser._id}`,
+          `https://chat-app-0zpk.onrender.com/api/message/send/${selectedUser._id}`,
           {
 
             message: messageInput,

@@ -14,7 +14,7 @@ const Login = () => {
     setLoading(true);
 
     try {
-      const response = await axios.post('http://localhost:3000/api/user/login', {
+      const response = await axios.post('https://chat-app-0zpk.onrender.com/api/user/login', {
         email,
         password,
       });

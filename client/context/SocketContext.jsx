@@ -18,7 +18,7 @@ export const SocketProvider=({children})=>{
     useEffect(()=>{
 
         if(user){
-            const socket=io('http://localhost:3000',{
+            const socket=io('https://chat-app-0zpk.onrender.com',{
                 query:{userId:JSON.parse(user)._id}
             })
             setSocket(socket)

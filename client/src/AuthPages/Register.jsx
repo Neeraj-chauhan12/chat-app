@@ -15,7 +15,7 @@ const Register = () => {
     setLoading(true);
 
     try {
-      const response = await axios.post('http://localhost:3000/api/user/register', {
+      const response = await axios.post('https://chat-app-0zpk.onrender.com/api/user/register', {
         username,
         email,
         password,
