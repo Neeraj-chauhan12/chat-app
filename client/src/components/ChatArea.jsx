@@ -1,9 +1,9 @@
 import React from 'react'
 
-const ChatArea = ({loading,messageInput,setMessageInput,handleSendMessage, selectedUser, setSidebarOpen, getOnlineUserStatus ,messages,messagesEndRef,currentUser}) => {
+const ChatArea = ({loading,formattedTime,messageInput,setMessageInput,handleSendMessage, selectedUser, setSidebarOpen, getOnlineUserStatus ,messages,messagesEndRef,currentUser}) => {
  
-  const createdAt=new Date(messages?.createdAt);
-  const formattedTime=createdAt.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
+  // const createdAt=new Date(messages?.createdAt);
+  // const formattedTime=createdAt.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
  
   return (
     <>
@@ -97,7 +97,7 @@ const ChatArea = ({loading,messageInput,setMessageInput,handleSendMessage, selec
                         }`}
                       >
                         <p className="break-words">{msg.message}</p>
-                        <span className="text-xs text-gray-500 block mt-1">{formattedTime}</span>
+                        <span className="text-xs text-black block mt-1">{formattedTime}</span>
                       </div>
                     </div>
                   ))}

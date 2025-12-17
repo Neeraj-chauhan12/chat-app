@@ -33,6 +33,9 @@ const Chat = () => {
     return onlineUsers.includes(userId) ? <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 bg-green-500 rounded-full flex-shrink-0"></div> : null;
   }
 
+   const createdAt=new Date(messages?.createdAt);
+  const formattedTime=createdAt.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
+
   useEffect(()=>{
     socket?.on('newMessage',(newMessage)=>{
       const notification=new Audio(receiveSound);
@@ -237,6 +240,7 @@ const Chat = () => {
         messages={messages}
         messagesEndRef={messagesEndRef}
         currentUser={currentUser}
+        formattedTime={formattedTime}
       />
       
     </div>
