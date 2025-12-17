@@ -52,7 +52,7 @@ const Chat = () => {
       const res=await axios.get(`https://chat-app-0zpk.onrender.com/api/message/get/${selectedUser._id}`,{
         headers:{ Authorization: `Bearer ${localStorage.getItem('token')}` }
       })
-      console.log("res messages",res.data);
+      
       setMessages(res.data.messages);
     }
     if(selectedUser){
@@ -64,7 +64,7 @@ const Chat = () => {
       toast.error("Failed to fetch messages");
     }
   }, [selectedUser])
-  console.log("messages",messages);
+  
 
   // Auto-scroll to bottom when messages change
   useEffect(() => {
@@ -132,7 +132,7 @@ const Chat = () => {
           },
           { headers: { Authorization: `Bearer ${token}` } }
         );
-        console.log('Message sent response:', response.data);
+       
 
         setMessages([...messages, response.data.messageData]);
         toast.success('Message sent');
