@@ -34,7 +34,7 @@ if (process.env.NODE_ENV === "production") {
     const dirname = path.resolve();
 
 app.use(express.static(path.join(dirname, "/client/dist")))
-app.get((_,res)=>{
+app.use((_,res)=>{
     res.sendFile(path.resolve(dirname, "client", "dist", "index.html"))
 })
 }
