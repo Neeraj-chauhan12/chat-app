@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useSocketContext } from "../../context/SocketContext";
+import receiveSound from '../../public/received.mp3';
+import sendSound from '../../public/send.mp3';
 
 const Chat = () => {
   const [messages, setMessages] = useState([]);
@@ -19,6 +21,25 @@ const Chat = () => {
   const user=localStorage.getItem('user')
   const {socket,onlineUsers}=useSocketContext();
   const isOnline=onlineUsers.includes(user?JSON.parse(user)._id:null);
+
+  const getOnlineUserStatus=(userId)=>{
+    return onlineUsers.includes(userId)?"● Online":"● Offline";
+  }
+
+  const getOnlineUserGreen=(userId)=>{
+    return onlineUsers.includes(userId) ? <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 bg-green-500 rounded-full flex-shrink-0"></div> : null;
+  }
+
+  useEffect(()=>{
+    socket?.on('newMessage',(newMessage)=>{
+      const notification=new Audio(receiveSound);
+      notification.play();
+      setMessages((prevMessages)=>[...prevMessages,newMessage]);
+    
+  });
+
+  return ()=>socket?.off('newMessage');
+},[socket,messages,setMessages]);
 
 
   useEffect(()=>{
@@ -248,9 +269,9 @@ const Chat = () => {
                     </p>
                   </div>
                   {/* user.online */}
-                  {/* {isOnline && (
-                    <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 bg-green-500 rounded-full flex-shrink-0"></div>
-                  )} */}
+                
+                    <div>{getOnlineUserGreen(user._id)}</div>
+                
                 </div>
               </button>
             ))
@@ -295,11 +316,13 @@ const Chat = () => {
                     {selectedUser.username}
                   </h2>
                   <p className="text-xs sm:text-sm text-gray-500">
-                    {selectedUser.online ? (
+
+                    {getOnlineUserStatus(selectedUser._id)}
+                    {/* {selectedUser.online ? (
                       <span className="text-green-600">● Online</span>
                     ) : (
                       <span className="text-gray-400">● Offline</span>
-                    )}
+                    )} */}
                   </p>
                 </div>
               </div>

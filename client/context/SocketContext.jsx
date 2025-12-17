@@ -14,7 +14,7 @@ export const SocketProvider=({children})=>{
     const [socket,setSocket]=useState(null)
     const [onlineUsers,setOnlineUsers]=useState([])
     const user=localStorage.getItem('user')
-    console.log("Socket Context User:",JSON.parse(user)._id);
+    // console.log("Socket Context User:",user._id);
     useEffect(()=>{
 
         if(user){
